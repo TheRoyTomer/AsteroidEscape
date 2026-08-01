@@ -172,3 +172,4 @@ MonoBehaviour:
   movementSpeed: 10
   rotationSpeed: 50
   wrapMargin: 2
+  explosionPrefab: {fileID: 7065959568719931209, guid: dd9d5d06d7d09834db64128636d6d65c, type: 3}

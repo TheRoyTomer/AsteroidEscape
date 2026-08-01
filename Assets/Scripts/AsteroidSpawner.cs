@@ -5,6 +5,8 @@ public class AsteroidSpawner : MonoBehaviour
     [SerializeField] private GameObject asteroidPrefab;
     [SerializeField] private float spawnOffset = 1f;
     [SerializeField] private float spawnInterval = 7f;
+    
+    [SerializeField] private GameManagerScript gameManager;
 
     private Camera mainCamera;
     private float spawnTimer;
@@ -21,6 +23,11 @@ public class AsteroidSpawner : MonoBehaviour
     
     private void Update()
     {
+        if (!gameManager.IsGameActive())
+        {
+            return;
+        }
+
         spawnTimer += Time.deltaTime;
 
         if (spawnTimer >= spawnInterval)

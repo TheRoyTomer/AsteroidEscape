@@ -6,10 +6,13 @@ public class BulletController : MonoBehaviour
     [SerializeField] private float lifeTime = 7f;
 
     private Rigidbody2D rigidBody;
+    
+    private GameManagerScript gameManager;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        gameManager = FindFirstObjectByType<GameManagerScript>();
     }
 
     private void Start()
@@ -23,8 +26,13 @@ public class BulletController : MonoBehaviour
     {
         if (other.CompareTag("Asteroid"))
         {
-            Destroy(other.gameObject);
+            gameManager.AddScore(10);
+            AsteroidController asteroidController =
+                other.GetComponent<AsteroidController>();
+
+            asteroidController.Explode();
             Destroy(gameObject);
+            
         }
     }
 }

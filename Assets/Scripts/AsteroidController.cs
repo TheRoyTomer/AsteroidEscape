@@ -5,6 +5,8 @@ public class AsteroidController : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float wrapMargin = 2f;
+    
+    [SerializeField] private GameObject explosionPrefab;
 
     private Rigidbody2D rigidBody;
     private Camera mainCamera;
@@ -58,5 +60,16 @@ public class AsteroidController : MonoBehaviour
             newPosition.y = topRight.y + wrapMargin;
         }
         rigidBody.position = newPosition;
+    }
+    
+    public void Explode()
+    {
+        Instantiate(
+            explosionPrefab,
+            transform.position,
+            Quaternion.identity
+        );
+
+        Destroy(gameObject);
     }
 }
