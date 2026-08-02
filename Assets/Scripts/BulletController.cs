@@ -26,11 +26,10 @@ public class BulletController : MonoBehaviour
     {
         if (other.CompareTag("Asteroid"))
         {
-            gameManager.AddScore(10);
             AsteroidController asteroidController =
                 other.GetComponent<AsteroidController>();
 
-            asteroidController.Explode();
+            asteroidController.Explode(true);
             Destroy(gameObject);
             
         }

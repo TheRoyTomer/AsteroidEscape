@@ -3,14 +3,20 @@ using TMPro;
 
 public class GameManagerScript : MonoBehaviour
 {
-    [SerializeField] private TMP_Text scoreText;
-    
+    [SerializeField] private TMP_Text crystalText;
+    [SerializeField] private PlayerShooting playerShooting;
+
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip weaponUpgradeSound;
+
     private bool isGameActive = true;
-    private int score = 0;
-    
+    private int crystals = 0;
+    private int currentWeaponLevel = 1;
+
     private void Awake()
     {
-        scoreText.text = "Score: " + score;
+        crystalText.text = "Crystals: " + crystals;
+        playerShooting.SetWeaponLevel(currentWeaponLevel);
     }
 
     public bool IsGameActive()
@@ -26,22 +32,43 @@ public class GameManagerScript : MonoBehaviour
 
         Debug.Log("Game Over");
     }
-    
+
     private void DestroyAllAsteroids()
     {
-        GameObject[] asteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+        GameObject[] asteroids =
+            GameObject.FindGameObjectsWithTag("Asteroid");
 
         foreach (GameObject asteroid in asteroids)
         {
             Destroy(asteroid);
         }
     }
-    
-    public void AddScore(int points)
-    {
-        score += points;
-        scoreText.text = "Score: " + score;
 
-        Debug.Log("Score: " + score);
+    public void AddCrystal()
+    {
+        crystals++;
+
+        crystalText.text = "Crystals: " + crystals;
+
+        int newWeaponLevel = 1;
+
+        if (crystals >= 10)
+        {
+            newWeaponLevel = 3;
+        }
+        else if (crystals >= 5)
+        {
+            newWeaponLevel = 2;
+        }
+
+        if (newWeaponLevel != currentWeaponLevel)
+        {
+            currentWeaponLevel = newWeaponLevel;
+
+            playerShooting.SetWeaponLevel(currentWeaponLevel);
+            audioSource.PlayOneShot(weaponUpgradeSound);
+        }
+
+        Debug.Log("Crystals: " + crystals);
     }
 }

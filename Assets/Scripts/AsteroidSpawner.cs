@@ -4,13 +4,18 @@ public class AsteroidSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject asteroidPrefab;
     [SerializeField] private float spawnOffset = 1f;
-    [SerializeField] private float spawnInterval = 7f;
-    
+    [SerializeField] private float spawnInterval = 3f;
+
+    [SerializeField] private float difficultyIncreaseInterval = 10f;
+    [SerializeField] private float spawnIntervalDecrease = 0.25f;
+    [SerializeField] private float minimumSpawnInterval = 0.5f;
+
     [SerializeField] private GameManagerScript gameManager;
 
     private Camera mainCamera;
     private float spawnTimer;
-    
+    private float difficultyTimer;
+
     private void Awake()
     {
         mainCamera = Camera.main;
@@ -20,12 +25,26 @@ public class AsteroidSpawner : MonoBehaviour
     {
         SpawnAsteroid();
     }
-    
+
     private void Update()
     {
         if (!gameManager.IsGameActive())
         {
             return;
+        }
+
+        difficultyTimer += Time.deltaTime;
+
+        if (difficultyTimer >= difficultyIncreaseInterval)
+        {
+            spawnInterval = Mathf.Max(
+                minimumSpawnInterval,
+                spawnInterval - spawnIntervalDecrease
+            );
+
+            difficultyTimer = 0f;
+
+            Debug.Log("New spawn interval: " + spawnInterval);
         }
 
         spawnTimer += Time.deltaTime;
@@ -36,8 +55,7 @@ public class AsteroidSpawner : MonoBehaviour
             spawnTimer = 0f;
         }
     }
-    
-    
+
     private void SpawnAsteroid()
     {
         Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(
@@ -49,7 +67,6 @@ public class AsteroidSpawner : MonoBehaviour
         );
 
         Vector2 spawnPosition = Vector2.zero;
-        Vector2 movementDirection = Vector2.zero;
 
         int spawnSide = Random.Range(0, 4);
 
@@ -60,7 +77,6 @@ public class AsteroidSpawner : MonoBehaviour
                     topRight.x + spawnOffset,
                     Random.Range(bottomLeft.y, topRight.y)
                 );
-                movementDirection = Vector2.left;
                 break;
 
             case 1:
@@ -68,7 +84,6 @@ public class AsteroidSpawner : MonoBehaviour
                     bottomLeft.x - spawnOffset,
                     Random.Range(bottomLeft.y, topRight.y)
                 );
-                movementDirection = Vector2.right;
                 break;
 
             case 2:
@@ -76,7 +91,6 @@ public class AsteroidSpawner : MonoBehaviour
                     Random.Range(bottomLeft.x, topRight.x),
                     topRight.y + spawnOffset
                 );
-                movementDirection = Vector2.down;
                 break;
 
             default:
@@ -84,9 +98,16 @@ public class AsteroidSpawner : MonoBehaviour
                     Random.Range(bottomLeft.x, topRight.x),
                     bottomLeft.y - spawnOffset
                 );
-                movementDirection = Vector2.up;
                 break;
         }
+
+        Vector2 targetPosition = new Vector2(
+            Random.Range(bottomLeft.x, topRight.x),
+            Random.Range(bottomLeft.y, topRight.y)
+        );
+
+        Vector2 movementDirection =
+            (targetPosition - spawnPosition).normalized;
 
         GameObject newAsteroid = Instantiate(
             asteroidPrefab,

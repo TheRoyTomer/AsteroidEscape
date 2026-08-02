@@ -7,6 +7,9 @@ public class AsteroidController : MonoBehaviour
     [SerializeField] private float wrapMargin = 2f;
     
     [SerializeField] private GameObject explosionPrefab;
+    
+    [SerializeField] private GameObject crystalPrefab;
+    [SerializeField] private float crystalDropChance = 0.2f;
 
     private Rigidbody2D rigidBody;
     private Camera mainCamera;
@@ -62,13 +65,22 @@ public class AsteroidController : MonoBehaviour
         rigidBody.position = newPosition;
     }
     
-    public void Explode()
+    public void Explode(bool shouldDropCrystal)
     {
         Instantiate(
             explosionPrefab,
             transform.position,
             Quaternion.identity
         );
+
+        if (shouldDropCrystal && Random.value <= crystalDropChance)
+        {
+            Instantiate(
+                crystalPrefab,
+                transform.position,
+                Quaternion.identity
+            );
+        }
 
         Destroy(gameObject);
     }
