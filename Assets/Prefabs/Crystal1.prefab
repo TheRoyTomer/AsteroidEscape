@@ -172,6 +172,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrystalController
   audioSource: {fileID: -5265141611023871890}
   crystalCollectSound: {fileID: 8300000, guid: a8e5785ed63d63e4792d780a8d844cbb, type: 3}
+  disappearEffectPrefab: {fileID: 8102253479280633275, guid: 91f72ef9bdc75924c8522f74f423f8a7, type: 3}
+  lifeTime: 8
+  blinkDuration: 2
+  blinkInterval: 0.15
 --- !u!82 &-5265141611023871890
 AudioSource:
   m_ObjectHideFlags: 0

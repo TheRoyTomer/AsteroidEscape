@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Image))]
 public class WeaponDisplayUI : MonoBehaviour
 {
     [SerializeField] private Sprite oneBulletSprite;
@@ -12,11 +13,15 @@ public class WeaponDisplayUI : MonoBehaviour
     private void Awake()
     {
         weaponImage = GetComponent<Image>();
-        SetWeaponDisplay(1);
     }
 
     public void SetWeaponDisplay(int weaponLevel)
     {
+        if (weaponImage == null)
+        {
+            weaponImage = GetComponent<Image>();
+        }
+
         if (weaponLevel == 1)
         {
             weaponImage.sprite = oneBulletSprite;

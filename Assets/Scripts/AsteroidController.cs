@@ -5,19 +5,28 @@ public class AsteroidController : MonoBehaviour
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private float rotationSpeed = 50f;
     [SerializeField] private float wrapMargin = 2f;
-    
+
+    [SerializeField] private int startingHealth = 2;
+    [SerializeField] private Sprite crackedSprite;
+
     [SerializeField] private GameObject explosionPrefab;
-    
+
     [SerializeField] private GameObject crystalPrefab;
     [SerializeField] private float crystalDropChance = 0.2f;
 
+    private int currentHealth;
+
     private Rigidbody2D rigidBody;
+    private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
+
+        currentHealth = startingHealth;
     }
 
     public void Initialize(Vector2 movementDirection)
@@ -27,12 +36,12 @@ public class AsteroidController : MonoBehaviour
 
         rigidBody.angularVelocity = rotationSpeed;
     }
-    
+
     private void FixedUpdate()
     {
         WrapAroundScreen();
     }
-    
+
     private void WrapAroundScreen()
     {
         Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(
@@ -62,9 +71,26 @@ public class AsteroidController : MonoBehaviour
         {
             newPosition.y = topRight.y + wrapMargin;
         }
+
         rigidBody.position = newPosition;
     }
-    
+
+    public void TakeBulletDamage()
+    {
+        currentHealth--;
+
+        if (currentHealth <= 0)
+        {
+            Explode(true);
+            return;
+        }
+
+        if (crackedSprite != null)
+        {
+            spriteRenderer.sprite = crackedSprite;
+        }
+    }
+
     public void Explode(bool shouldDropCrystal)
     {
         Instantiate(
@@ -73,7 +99,8 @@ public class AsteroidController : MonoBehaviour
             Quaternion.identity
         );
 
-        if (shouldDropCrystal && Random.value <= crystalDropChance)
+        if (shouldDropCrystal &&
+            Random.value <= crystalDropChance)
         {
             Instantiate(
                 crystalPrefab,

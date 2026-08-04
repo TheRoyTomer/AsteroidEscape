@@ -169,9 +169,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8a0b143717f1141a07f2b0059a3b4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AsteroidController
-  movementSpeed: 10
+  movementSpeed: 17
   rotationSpeed: 50
   wrapMargin: 2
+  startingHealth: 2
+  crackedSprite: {fileID: 21300000, guid: 3cf2b1ab02cef36459e57b4a6209806b, type: 3}
   explosionPrefab: {fileID: 7065959568719931209, guid: dd9d5d06d7d09834db64128636d6d65c, type: 3}
   crystalPrefab: {fileID: 8821658995791004479, guid: b4e14b4a6c12bbe41bca762622ccbd34, type: 3}
   crystalDropChance: 1

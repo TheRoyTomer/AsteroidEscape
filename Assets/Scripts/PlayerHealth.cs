@@ -16,6 +16,14 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip shipImpactSound;
 
+    [SerializeField] private CameraShake cameraShake;
+
+    [SerializeField] private float damageShakeDuration = 0.7f;
+    [SerializeField] private float damageShakeStrength = 0.16f;
+
+    [SerializeField] private float deathShakeDuration = 1f;
+    [SerializeField] private float deathShakeStrength = 0.6f;
+
     private int currentLives;
     private bool isInvincible;
 
@@ -49,6 +57,14 @@ public class PlayerHealth : MonoBehaviour
         {
             GameOver();
             return;
+        }
+
+        if (cameraShake != null)
+        {
+            cameraShake.Shake(
+                damageShakeDuration,
+                damageShakeStrength
+            );
         }
 
         audioSource.PlayOneShot(shipImpactSound);
@@ -109,6 +125,14 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator GameOverSequence()
     {
         gameManager.GameOver();
+
+        if (cameraShake != null)
+        {
+            cameraShake.Shake(
+                deathShakeDuration,
+                deathShakeStrength
+            );
+        }
 
         ParticleSystem engineEffect =
             GetComponentInChildren<ParticleSystem>();
