@@ -4,10 +4,10 @@ public class AsteroidSpawner : MonoBehaviour
 {
     [SerializeField] private GameObject asteroidPrefab;
     [SerializeField] private float spawnOffset = 1f;
-    [SerializeField] private float spawnInterval = 3f;
+    [SerializeField] private float spawnInterval = 2.5f;
 
-    [SerializeField] private float difficultyIncreaseInterval = 10f;
-    [SerializeField] private float spawnIntervalDecrease = 0.25f;
+    [SerializeField] private float difficultyIncreaseInterval = 7f;
+    [SerializeField] private float spawnIntervalDecrease = 0.3f;
     [SerializeField] private float minimumSpawnInterval = 0.5f;
 
     [SerializeField] private GameManagerScript gameManager;

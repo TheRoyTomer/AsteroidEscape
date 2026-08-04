@@ -7,12 +7,18 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Transform firePointCenter;
     [SerializeField] private Transform firePointLeft;
     [SerializeField] private Transform firePointRight;
-    
+
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip gunFireSound;
 
+    [SerializeField] private WeaponDisplayUI weaponDisplayUI;
 
     private int weaponLevel = 1;
+
+    private void Awake()
+    {
+        SetWeaponLevel(1);
+    }
 
     private void Update()
     {
@@ -25,11 +31,14 @@ public class PlayerShooting : MonoBehaviour
     public void SetWeaponLevel(int newWeaponLevel)
     {
         weaponLevel = Mathf.Clamp(newWeaponLevel, 1, 3);
+
+        weaponDisplayUI.SetWeaponDisplay(weaponLevel);
     }
 
     private void Shoot()
     {
-        audioSource.PlayOneShot(gunFireSound, 0.25f);        
+        audioSource.PlayOneShot(gunFireSound, 0.25f);
+
         if (weaponLevel == 1)
         {
             CreateBullet(firePointCenter);

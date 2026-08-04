@@ -15,7 +15,7 @@ public class GameManagerScript : MonoBehaviour
 
     private void Awake()
     {
-        crystalText.text = "Crystals: " + crystals;
+        crystalText.text = crystals.ToString();
         playerShooting.SetWeaponLevel(currentWeaponLevel);
     }
 
@@ -48,8 +48,8 @@ public class GameManagerScript : MonoBehaviour
     {
         crystals++;
 
-        crystalText.text = "Crystals: " + crystals;
-
+        crystalText.text = crystals.ToString();
+        
         int newWeaponLevel = 1;
 
         if (crystals >= 10)

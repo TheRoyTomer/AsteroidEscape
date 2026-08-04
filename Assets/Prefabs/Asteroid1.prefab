@@ -174,4 +174,4 @@ MonoBehaviour:
   wrapMargin: 2
   explosionPrefab: {fileID: 7065959568719931209, guid: dd9d5d06d7d09834db64128636d6d65c, type: 3}
   crystalPrefab: {fileID: 8821658995791004479, guid: b4e14b4a6c12bbe41bca762622ccbd34, type: 3}
-  crystalDropChance: 0.2
+  crystalDropChance: 1
