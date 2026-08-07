@@ -11,20 +11,27 @@ public class AsteroidController : MonoBehaviour
 
     [SerializeField] private GameObject explosionPrefab;
 
-    [SerializeField] private GameObject crystalPrefab;
-    [SerializeField] private float crystalDropChance = 0.2f;
+    [SerializeField] private GameObject blueCrystalPrefab;
+    [SerializeField] private GameObject greenCrystalPrefab;
+
+    [SerializeField] private float crystalDropChance = 0.4f;
+    [SerializeField] private float greenCrystalChance = 0.2f;
+
+    [SerializeField] private int firstHitScore = 250;
 
     private int currentHealth;
 
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
     private Camera mainCamera;
+    private GameManagerScript gameManager;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         mainCamera = Camera.main;
+        gameManager = FindFirstObjectByType<GameManagerScript>();
 
         currentHealth = startingHealth;
     }
@@ -81,8 +88,18 @@ public class AsteroidController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            if (gameManager != null)
+            {
+                gameManager.AddAsteroidScore();
+            }
+
             Explode(true);
             return;
+        }
+
+        if (gameManager != null)
+        {
+            gameManager.AddScoreFromHit(firstHitScore);
         }
 
         if (crackedSprite != null)
@@ -102,8 +119,19 @@ public class AsteroidController : MonoBehaviour
         if (shouldDropCrystal &&
             Random.value <= crystalDropChance)
         {
+            GameObject crystalToSpawn;
+
+            if (Random.value <= greenCrystalChance)
+            {
+                crystalToSpawn = greenCrystalPrefab;
+            }
+            else
+            {
+                crystalToSpawn = blueCrystalPrefab;
+            }
+
             Instantiate(
-                crystalPrefab,
+                crystalToSpawn,
                 transform.position,
                 Quaternion.identity
             );

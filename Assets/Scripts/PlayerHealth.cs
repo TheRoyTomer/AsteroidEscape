@@ -30,12 +30,14 @@ public class PlayerHealth : MonoBehaviour
     private Rigidbody2D rigidBody;
     private SpriteRenderer spriteRenderer;
     private PlayerController playerController;
+    private PlayerShield playerShield;
 
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         playerController = GetComponent<PlayerController>();
+        playerShield = GetComponent<PlayerShield>();
 
         currentLives = startingLives;
         healthUI.UpdateHealth(currentLives);
@@ -48,10 +50,16 @@ public class PlayerHealth : MonoBehaviour
             return;
         }
 
+        if (playerShield != null &&
+            playerShield.IsShieldActive())
+        {
+            return;
+        }
+
         currentLives--;
 
+        gameManager.RemoveLifeScore();
         healthUI.UpdateHealth(currentLives);
-        Debug.Log("Lives remaining: " + currentLives);
 
         if (currentLives <= 0)
         {
@@ -93,6 +101,12 @@ public class PlayerHealth : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Asteroid"))
+        {
+            return;
+        }
+
+        if (playerShield != null &&
+            playerShield.IsShieldActive())
         {
             return;
         }

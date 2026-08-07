@@ -3,6 +3,14 @@ using System.Collections;
 
 public class CrystalController : MonoBehaviour
 {
+    private enum CrystalType
+    {
+        Blue,
+        Green
+    }
+
+    [SerializeField] private CrystalType crystalType;
+
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip crystalCollectSound;
 
@@ -66,7 +74,20 @@ public class CrystalController : MonoBehaviour
 
         wasCollected = true;
 
-        gameManager.AddCrystal();
+        if (crystalType == CrystalType.Blue)
+        {
+            gameManager.AddCrystal();
+        }
+        else
+        {
+            PlayerShield playerShield =
+                other.GetComponent<PlayerShield>();
+
+            if (playerShield != null)
+            {
+                playerShield.CollectShield();
+            }
+        }
 
         if (audioSource != null &&
             crystalCollectSound != null)

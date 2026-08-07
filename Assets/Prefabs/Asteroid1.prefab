@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4776241086698720412}
   - component: {fileID: 6825483851885368171}
   - component: {fileID: 9037412500271275156}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Asteroid1
   m_TagString: Asteroid
   m_Icon: {fileID: 0}
@@ -175,5 +175,8 @@ MonoBehaviour:
   startingHealth: 2
   crackedSprite: {fileID: 21300000, guid: 3cf2b1ab02cef36459e57b4a6209806b, type: 3}
   explosionPrefab: {fileID: 7065959568719931209, guid: dd9d5d06d7d09834db64128636d6d65c, type: 3}
-  crystalPrefab: {fileID: 8821658995791004479, guid: b4e14b4a6c12bbe41bca762622ccbd34, type: 3}
-  crystalDropChance: 1
+  blueCrystalPrefab: {fileID: 8821658995791004479, guid: b4e14b4a6c12bbe41bca762622ccbd34, type: 3}
+  greenCrystalPrefab: {fileID: 8821658995791004479, guid: 3266a1fb67ffb5841ab768b9933e1659, type: 3}
+  crystalDropChance: 0.4
+  greenCrystalChance: 0.3
+  firstHitScore: 250
