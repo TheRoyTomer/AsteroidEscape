@@ -1055,9 +1055,9 @@ MonoBehaviour:
   asteroidPrefab: {fileID: 3700045636650801794, guid: 530aa09a1c8fbe14eb95ff2d82d57afa, type: 3}
   spawnOffset: 1
   spawnInterval: 3
-  difficultyIncreaseInterval: 10
-  spawnIntervalDecrease: 0.25
-  minimumSpawnInterval: 0.5
+  difficultyIncreaseInterval: 5
+  spawnIntervalDecrease: 0.35
+  minimumSpawnInterval: 0.25
   gameManager: {fileID: 742995387}
 --- !u!4 &537497555
 Transform:
