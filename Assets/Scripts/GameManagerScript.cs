@@ -13,11 +13,14 @@ public class GameManagerScript : MonoBehaviour
 
     [SerializeField] private int asteroidScore = 1000;
     [SerializeField] private int blueCrystalScore = 500;
+    [SerializeField] private int greenCrystalScore = 1500;
     [SerializeField] private int lifeLostPenalty = 2000;
 
     [SerializeField] private float multiplierIncreaseInterval = 10f;
     [SerializeField] private int maximumMultiplier = 10;
     
+    [SerializeField] private LeaderboardManager leaderboardManager;
+
     private bool isGameActive = true;
 
     private int crystals = 0;
@@ -66,9 +69,10 @@ public class GameManagerScript : MonoBehaviour
     {
         isGameActive = false;
 
+        leaderboardManager.SaveScore(score);
+
         DestroyAllAsteroids();
 
-        Debug.Log("Game Over");
     }
 
     private void DestroyAllAsteroids()
@@ -113,6 +117,11 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
+    public void AddGreenCrystalScore()
+    {
+        AddScore(greenCrystalScore);
+    }
+
     public void AddAsteroidScore()
     {
         AddScore(asteroidScore);
@@ -136,7 +145,7 @@ public class GameManagerScript : MonoBehaviour
 
         UpdateScoreUI();
     }
-    
+
     public void AddScoreFromHit(int amount)
     {
         AddScore(amount);
@@ -146,5 +155,4 @@ public class GameManagerScript : MonoBehaviour
     {
         scoreText.text = score.ToString();
     }
-    
 }

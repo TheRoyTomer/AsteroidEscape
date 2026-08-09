@@ -53,7 +53,9 @@ public class PauseMenuScript : MonoBehaviour
 
     public void GoToMainMenu()
     {
-        Debug.Log("Main Menu is not implemented yet.");
+
+            Time.timeScale = 1f;
+            SceneManager.LoadScene("MainMenuScene");
     }
 
     public void QuitGame()

@@ -80,6 +80,8 @@ public class CrystalController : MonoBehaviour
         }
         else
         {
+            gameManager.AddGreenCrystalScore();
+
             PlayerShield playerShield =
                 other.GetComponent<PlayerShield>();
 
